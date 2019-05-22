@@ -2,7 +2,25 @@
 (() =>
 {
 
+    let main = document.getElementById("container"),
+    pages = document.getElementsByClassName("page");
 
+    main.onscroll = () =>
+    {
+        for (let i = 0; i < pages.length; i++) 
+        {
+            let currentPage = pages[i];
+            let pageName = currentPage.dataset.pageName;
+            
+            if ( ((currentPage.offsetTop - currentPage.clientHeight) - main.scrollTop <= -100) )
+            {
+                document.querySelector("nav li.active").classList.remove("active");   
+                document.querySelector(`nav ul li[data-page-name='${pageName}']`).classList.add("active");
+
+                document.querySelector(`section[data-page-name='${pageName}']`).classList.add("active");
+            }
+        }
+    };
 
 
 
