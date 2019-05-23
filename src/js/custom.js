@@ -22,6 +22,18 @@
         }
     };
 
+    document.querySelectorAll('nav ul a[href^="#"]').forEach(page => 
+    {
+        page.addEventListener('click', function(el) 
+        {
+            el.preventDefault();
+    
+            document.querySelector(this.getAttribute('href')).scrollIntoView(
+            {
+                behavior: 'smooth'
+            });
+        });
+    });
 
 
 })();
