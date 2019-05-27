@@ -3,7 +3,8 @@
 {
 
     let main = document.getElementById("container"),
-    pages = document.getElementsByClassName("page");
+        pages = document.getElementsByClassName("page"),
+        lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
 
     main.onscroll = () =>
     {
@@ -34,6 +35,29 @@
             });
         });
     });
+
+
+    if ("IntersectionObserver" in window)
+    {
+        let lazyImageObserver = new IntersectionObserver( entries =>
+        {
+            entries.forEach( entry =>
+            {
+                if (entry.isIntersecting)
+                {
+                    let lazyImage = entry.target;
+                    lazyImage.src = lazyImage.dataset.src;
+                    lazyImage.classList.remove("lazy");
+                    lazyImageObserver.unobserve(lazyImage);
+                }
+            });
+        });
+
+        lazyImages.forEach( lazyImage =>
+        {
+            lazyImageObserver.observe(lazyImage);
+        });
+    }
 
 
 })();
